@@ -134,3 +134,69 @@ def print_student_card(student_id):
     else:
         print(f"Error: Could not print card, student {student_id} not found.")
 
+# --- Main Application Loop ---
+def main():
+    """Main function to run the MSMS application."""
+    load_data() # Load all data from file at startup.
+
+    while True:
+        print("\n===== MSMS v2 (Persistent) =====")
+        print("1. Check-in Student")
+        print("2. Print Student Card")
+        print("3. Update Teacher Info")
+        print("4. Remove Student")
+        print("q. Quit and Save")
+        
+        choice = input("Enter your choice: ")
+        
+        made_change = False # A flag to track if we need to save
+        if choice == '1':
+            # TODO: Get student_id and course_id from user, then call check_in().
+            try:
+                student_id = int(input("Enter student ID: "))
+                course_id = input("Enter course ID: ").strip()
+                check_in(student_id, course_id)
+                made_change = True
+            except ValueError:
+                print("Invalid student ID. Please enter a number.")
+        elif choice == '2':
+            # TODO: Get student_id, then call print_student_card().
+            try:
+                student_id = int(input("Enter student ID: "))
+                print_student_card(student_id)
+            except ValueError:
+                print("Invalid student ID. Please enter a number.")
+            pass # No change made, so no save needed
+        elif choice == '3':
+            # TODO: Get teacher_id and new details, then call update_teacher().
+            # Example: update_teacher(1, speciality="Advanced Piano")
+            try:
+                teacher_id = int(input("Enter teacher ID: "))
+                field = input("Enter field to update (name or speciality): ").strip()
+                value = input(f"Enter new value for '{field}': ").strip()
+                update_teacher(teacher_id, **{field: value})
+                made_change = True
+            except ValueError:
+                print("Invalid teacher ID. Please enter a number.")
+        elif choice == '4':
+            # TODO: Get student_id, then call remove_student().
+            try:
+                student_id = int(input("Enter student ID to remove: "))
+                remove_student(student_id)
+                made_change = True
+            except ValueError:
+                print("Invalid student ID. Please enter a number.")
+        elif choice.lower() == 'q':
+            print("Saving final changes and exiting.")
+            break
+        else:
+            print("Invalid choice.")
+            
+        if made_change:
+            save_data() # Save the data immediately after any change.
+
+    save_data() # One final save on exit.
+
+# --- Program Start ---
+if __name__ == "__main__":
+    main()
