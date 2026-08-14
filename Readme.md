@@ -17,6 +17,7 @@ Features
 Data Structure:
 
 All data is stored in a global dictionary called app_data with the following keys:
+
 students (list of dictionaries)
 teachers (list of dictionaries)
 attendance (list of check-in records)
